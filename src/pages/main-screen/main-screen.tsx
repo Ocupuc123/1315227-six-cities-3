@@ -17,9 +17,9 @@ function MainScreen({ offers }: MainScreenProps): JSX.Element {
     <main className="page__main page__main--index">
       <Helmet>
         {/* TODO: activeOfferId временно, только для линтера */}
-        <title>6 cities {activeOfferId}</title>
+        <title>6 cities</title>
       </Helmet>
-      <h1 className="visually-hidden">Cities</h1>
+      <h1 className="visually-hidden">Cities {activeOfferId}</h1>
       <Tabs />
       <div className="cities">
         <div className="cities__places-container container">
