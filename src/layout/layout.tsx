@@ -1,11 +1,16 @@
 import { Outlet, useLocation, matchPath } from 'react-router-dom';
 import Header from '../components/header/header';
 import { AppRoute } from '../const';
+import ScrollToTop from '../components/scroll-to-top/scroll-to-top';
 
-const getPageModifiers = (pathname: AppRoute) => {
-  const modifiers = [];
+type LayoutProps = {
+  isFavoriteEmpty?: boolean;
+};
 
-  if (matchPath(AppRoute.Main, pathname)) {
+const getPageModifiers = (pathname: AppRoute, isFavoriteEmpty: boolean) => {
+  const modifiers: string[] = [];
+
+  if (pathname === AppRoute.Main) {
     modifiers.push('page--gray', 'page--main');
   }
 
@@ -13,16 +18,23 @@ const getPageModifiers = (pathname: AppRoute) => {
     modifiers.push('page--gray', 'page--login');
   }
 
+  if (matchPath(AppRoute.Favorites, pathname) && isFavoriteEmpty) {
+    modifiers.push('page--favorites-empty');
+  }
+
   return modifiers.join(' ');
 };
 
-function Layout(): JSX.Element {
+function Layout({ isFavoriteEmpty = false }: LayoutProps): JSX.Element {
   const { pathname } = useLocation();
 
   return (
-    <div className={`page ${getPageModifiers(pathname as AppRoute)}`}>
+    <div
+      className={`page ${getPageModifiers(pathname as AppRoute, isFavoriteEmpty)}`}
+    >
       <Header />
       <Outlet />
+      <ScrollToTop />
     </div>
   );
 }
