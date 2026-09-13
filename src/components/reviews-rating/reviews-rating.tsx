@@ -1,7 +1,14 @@
 import { ChangeEvent, Fragment } from 'react';
 
-const RATING_TITLES = ['terribly', 'badly', 'not bad', 'good', 'perfect'] as const;
-const RATING_COUNT = RATING_TITLES.length;
+const RaringTitles = [
+  'terribly',
+  'badly',
+  'not bad',
+  'good',
+  'perfect',
+] as const;
+
+const RATING_COUNT = RaringTitles.length;
 
 type ReviewsRatingProps = {
   rating: number;
@@ -30,7 +37,7 @@ function ReviewsRating({ onChange, rating }: ReviewsRatingProps): JSX.Element {
             <label
               htmlFor={`${startIndex}-star`}
               className="reviews__rating-label form__rating-label"
-              title={RATING_TITLES[value - 1]}
+              title={RaringTitles[value - 1]}
             >
               <svg className="form__star-image" width={37} height={33}>
                 <use xlinkHref="#icon-star" />
