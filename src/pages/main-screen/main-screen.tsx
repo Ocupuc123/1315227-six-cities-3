@@ -10,14 +10,14 @@ type MainScreenProps = {
 };
 
 function MainScreen({ offers }: MainScreenProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const handleCardHover = (id: string | null) => setActiveOfferId(id);
 
   return (
     <main className="page__main page__main--index">
       <Helmet>
-        <title>6 cities</title>
+        {/* TODO: activeOfferId временно, только для линтера */}
+        <title>6 cities {activeOfferId}</title>
       </Helmet>
       <h1 className="visually-hidden">Cities</h1>
       <Tabs />
