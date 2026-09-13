@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Offer } from '../../types/offer';
-import { CardType, ButtonType } from '../../const';
+import { CardType } from '../../const';
 import { capitalizeString } from '../../utils/common';
 import { getRatingStyle } from '../../utils/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
