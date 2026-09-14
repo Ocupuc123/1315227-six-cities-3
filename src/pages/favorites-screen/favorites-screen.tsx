@@ -9,7 +9,17 @@ type FavoritesScreenProps = {
   favorites: Offer[];
 };
 
-function FavoritesScreen({ favorites }: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen({
+  favorites = [],
+}: FavoritesScreenProps): JSX.Element {
+  if (!favorites) {
+    return (
+      <main className="page__main page__main--favorites">
+        <div className="container">Загрузка...</div>
+      </main>
+    );
+  }
+
   const hasFavorites = favorites.length > 0;
 
   return (

@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import NearPlacesList from '../../components/near-places-list/near-places-list';
-import Reviewslist from '../../components/reviews-list/reviews-list';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import type { Offer, FullOffer } from '../../types/offer';
 import type { Comment } from '../../types/comment';
-import ReviewsForm from '../../components/reviews-form/reviews-form';
 import { AuthorizationStatus, ButtonType } from '../../const';
-import { capitalizeString } from '../../utils/common';
 import { getRatingStyle } from '../../utils/offer';
-
-const MAX_IMAGES = 6;
+import Map from '../../components/map/map';
+import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import OfferHost from '../../components/offer-host/offer-host';
+import OfferFeatures from '../../components/offer-features/offer-features';
+import OfferReviews from '../../components/offer-reviews/offer-reviews';
 
 type OfferScreenProps = {
   offersNearby: Offer[];
@@ -19,11 +19,19 @@ type OfferScreenProps = {
 };
 
 function OfferScreen({
-  offersNearby,
-  comments,
+  offersNearby = [],
+  comments = [],
   offer,
   authorizationStatus,
 }: OfferScreenProps): JSX.Element {
+  if (!offer) {
+    return (
+      <main className="page__main page__main--offer">
+        <div className="container">Загрузка...</div>
+      </main>
+    );
+  }
+
   const {
     title,
     type,
@@ -45,21 +53,7 @@ function OfferScreen({
         <title>6 cities: offer</title>
       </Helmet>
       <section className="offer">
-        {images.length > 0 && (
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              {images.slice(0, MAX_IMAGES).map((imageSrc) => (
-                <div className="offer__image-wrapper" key={imageSrc}>
-                  <img
-                    className="offer__image"
-                    src={imageSrc}
-                    alt="Photo studio"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {images.length > 0 && <OfferGallery images={images} />}
         <div className="offer__container container">
           <div className="offer__wrapper">
             {isPremium && (
@@ -69,7 +63,10 @@ function OfferScreen({
             )}
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{title}</h1>
-              <BookmarkButton isFavorite={isFavorite} buttonType={ButtonType.Offer} />
+              <BookmarkButton
+                isFavorite={isFavorite}
+                buttonType={ButtonType.Offer}
+              />
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
@@ -80,17 +77,11 @@ function OfferScreen({
                 {rating}
               </span>
             </div>
-            <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">
-                {capitalizeString(type)}
-              </li>
-              <li className="offer__feature offer__feature--bedrooms">
-                {bedrooms} Bedrooms
-              </li>
-              <li className="offer__feature offer__feature--adults">
-                Max {maxAdults} adults
-              </li>
-            </ul>
+            <OfferFeatures
+              type={type}
+              bedrooms={bedrooms}
+              maxAdults={maxAdults}
+            />
             <div className="offer__price">
               <b className="offer__price-value">€{price}</b>
               <span className="offer__price-text">&nbsp;night</span>
@@ -107,44 +98,14 @@ function OfferScreen({
                 </ul>
               </div>
             )}
-            <div className="offer__host">
-              <h2 className="offer__host-title">Meet the host</h2>
-              <div className="offer__host-user user">
-                <div
-                  className={`offer__avatar-wrapper user__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''}`}
-                >
-                  {host.avatarUrl && (
-                    <img
-                      className="offer__avatar user__avatar"
-                      src={host.avatarUrl}
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
-                  )}
-                </div>
-                <span className="offer__user-name">{host.name}</span>
-                {host.isPro && <span className="offer__user-status">Pro</span>}
-              </div>
-              <div className="offer__description">
-                <p className="offer__text">
-                  {description}
-                </p>
-              </div>
-            </div>
-            <section className="offer__reviews reviews">
-              <h2 className="reviews__title">
-                Reviews ·{' '}
-                <span className="reviews__amount">{comments.length}</span>
-              </h2>
-              {comments.length > 0 && <Reviewslist comments={comments} />}
-              {authorizationStatus === AuthorizationStatus.Auth && (
-                <ReviewsForm />
-              )}
-            </section>
+            <OfferHost host={host} description={description} />
+            <OfferReviews
+              comments={comments}
+              authorizationStatus={authorizationStatus}
+            />
           </div>
         </div>
-        <section className="offer__map map" />
+        <Map mapType='offer' />
       </section>
       {offersNearby.length > 0 && (
         <div className="container">

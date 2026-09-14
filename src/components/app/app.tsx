@@ -21,7 +21,7 @@ type AppScreenProps = {
   comments: Comment[];
 };
 
-function App({ offers, favorites, offersNearby, offer, comments }: AppScreenProps) {
+function App({ offer, offers = [], favorites = [], offersNearby = [], comments = [] }: AppScreenProps) {
   const authorizationStatus = getAuthorizationStatus();
   const isFavoriteEmpty = favorites.length === 0;
 

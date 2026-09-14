@@ -16,7 +16,7 @@ type OffersListProps = {
 };
 
 function OffersList({
-  offers,
+  offers = [],
   onCardHover,
   cardType = CardType.City,
 }: OffersListProps): JSX.Element {
