@@ -1,3 +1,14 @@
+export const Cities = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+] as const;
+
+export type CityName = (typeof Cities)[number];
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -9,4 +20,15 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum CardType {
+  City = 'city',
+  Favorite = 'favorite',
+  Near = 'near',
+}
+
+export enum ButtonType {
+  PlaceCard = 'place-card',
+  Offer = 'offer',
 }

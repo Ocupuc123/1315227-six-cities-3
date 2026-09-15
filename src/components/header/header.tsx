@@ -1,12 +1,12 @@
 import { Link, useLocation, matchPath } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../authorizationStatus';
+import { getAuthorizationStatus } from '../../utils/auth';
 
 function Header(): JSX.Element {
   const { pathname } = useLocation();
   const isLoginPage = matchPath(AppRoute.Login, pathname);
-  const authrozationStatus = getAuthorizationStatus();
+  const authorizationStatus = getAuthorizationStatus();
 
   return (
     <header className="header">
@@ -22,13 +22,13 @@ function Header(): JSX.Element {
                   <Link
                     className="header__nav-link header__nav-link--profile"
                     to={
-                      authrozationStatus === AuthorizationStatus.Auth
+                      authorizationStatus === AuthorizationStatus.Auth
                         ? AppRoute.Favorites
                         : AppRoute.Login
                     }
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper" />
-                    {authrozationStatus === AuthorizationStatus.Auth ? (
+                    {authorizationStatus === AuthorizationStatus.Auth ? (
                       <>
                         <span className="header__user-name user__name">
                           Oliver.conner@gmail.com
@@ -40,7 +40,7 @@ function Header(): JSX.Element {
                     )}
                   </Link>
                 </li>
-                {authrozationStatus === AuthorizationStatus.Auth && (
+                {authorizationStatus === AuthorizationStatus.Auth && (
                   <li className="header__nav-item">
                     <Link className="header__nav-link" to={AppRoute.Main}>
                       <span className="header__signout">Sign out</span>
