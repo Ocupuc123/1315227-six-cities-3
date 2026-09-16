@@ -1,4 +1,4 @@
-import { capitalizeString } from '../../utils/common';
+import { capitalizeString } from '../../../../utils/common';
 
 type OfferFeaturesProps = {
   type: string;

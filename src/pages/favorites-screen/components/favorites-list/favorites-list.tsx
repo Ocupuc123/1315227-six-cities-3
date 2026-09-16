@@ -1,7 +1,7 @@
-import type { Offer } from '../../types/offer';
+import type { Offer } from '../../../../types/offer';
 import { Link } from 'react-router-dom';
-import { Cities, CardType } from '../../const';
-import PlaceCard from '../../components/place-card/place-card';
+import { Cities, CardType } from '../../../../const';
+import PlaceCard from '../../../../components/place-card/place-card';
 
 type FavoriteListProps = {
   favorites: Offer[];

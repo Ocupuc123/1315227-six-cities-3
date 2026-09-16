@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { Offer } from '../../types/offer';
 import { CardType } from '../../const';
-import OffersList from '../../components/offers-list/offers-list';
-import PlacesSorting from '../../components/places-sorting/places-sorting';
-import Tabs from '../../components/tabs/tabs';
+import OffersList from './components/offers-list/offers-list';
+import PlacesSorting from './components/places-sorting/places-sorting';
+import Tabs from './components/tabs/tabs';
 import Map from '../../components/map/map';
 
 type MainScreenProps = {

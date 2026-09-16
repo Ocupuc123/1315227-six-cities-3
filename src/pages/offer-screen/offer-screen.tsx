@@ -1,15 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import NearPlacesList from '../../components/near-places-list/near-places-list';
-import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import type { Offer, FullOffer } from '../../types/offer';
 import type { Comment } from '../../types/comment';
 import { AuthorizationStatus, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import Map from '../../components/map/map';
-import OfferGallery from '../../components/offer-gallery/offer-gallery';
-import OfferHost from '../../components/offer-host/offer-host';
-import OfferFeatures from '../../components/offer-features/offer-features';
-import OfferReviews from '../../components/offer-reviews/offer-reviews';
+import NearPlacesList from './components/near-places-list/near-places-list';
+import OfferGallery from './components/offer-gallery/offer-gallery';
+import OfferHost from './components/offer-host/offer-host';
+import OfferFeatures from './components/offer-features/offer-features';
+import OfferReviews from './components/offer-reviews/offer-reviews';
 
 type OfferScreenProps = {
   offersNearby: Offer[];

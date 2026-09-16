@@ -1,6 +1,6 @@
-import type { Offer } from '../../types/offer';
-import { CardType } from '../../const';
-import PlaceCard from '../../components/place-card/place-card';
+import type { Offer } from '../../../../types/offer';
+import { CardType } from '../../../../const';
+import PlaceCard from '../../../../components/place-card/place-card';
 
 type NearPlacesListProps = {
   offersNearby: Offer[];
