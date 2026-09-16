@@ -1,3 +1,4 @@
+import type { User } from './user';
 import type { CityName } from '../const';
 
 export type Location = {
@@ -9,12 +10,6 @@ export type Location = {
 export type City = {
   name: CityName;
   location: Location;
-};
-
-export type Host = {
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
 };
 
 export type OfferBase = {
@@ -37,7 +32,7 @@ export type FullOffer = OfferBase & {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: Host;
+  host: User;
   images: string[];
   maxAdults: number;
 };
