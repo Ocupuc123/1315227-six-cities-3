@@ -1,7 +1,7 @@
-import type { Host } from '../../../../types/offer';
+import type { User } from '../../../../types/user';
 
 type OfferHostProps = {
-  host: Host;
+  host: User;
   description: string;
 };
 
