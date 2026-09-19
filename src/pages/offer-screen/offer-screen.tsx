@@ -4,7 +4,7 @@ import type { Comment } from '../../types/comment';
 import { AuthorizationStatus, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
-// import Map from '../../components/map/map';
+import Map from '../../components/map/map';
 import NearPlacesList from './components/near-places-list/near-places-list';
 import OfferGallery from './components/offer-gallery/offer-gallery';
 import OfferHost from './components/offer-host/offer-host';
@@ -24,14 +24,6 @@ function OfferScreen({
   offer,
   authorizationStatus,
 }: OfferScreenProps): JSX.Element {
-  if (!offer) {
-    return (
-      <main className="page__main page__main--offer">
-        <div className="container">Загрузка...</div>
-      </main>
-    );
-  }
-
   const {
     title,
     type,
@@ -46,6 +38,9 @@ function OfferScreen({
     images,
     maxAdults,
   } = offer;
+
+  const hasNearby = offersNearby.length > 0;
+  const city = offer.city;
 
   return (
     <main className="page__main page__main--offer">
@@ -105,9 +100,9 @@ function OfferScreen({
             />
           </div>
         </div>
-        {/* <Map mapType='offer' /> */}
+        {hasNearby && <Map mapType="offer" city={city} offers={offersNearby} />}
       </section>
-      {offersNearby.length > 0 && (
+      {hasNearby && (
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
