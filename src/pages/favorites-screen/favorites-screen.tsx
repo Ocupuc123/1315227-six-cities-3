@@ -10,7 +10,7 @@ type FavoritesScreenProps = {
 };
 
 function FavoritesScreen({
-  favorites = [],
+  favorites,
 }: FavoritesScreenProps): JSX.Element {
   if (!favorites) {
     return (

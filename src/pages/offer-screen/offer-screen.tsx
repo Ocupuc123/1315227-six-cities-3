@@ -4,7 +4,7 @@ import type { Comment } from '../../types/comment';
 import { AuthorizationStatus, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
-import Map from '../../components/map/map';
+// import Map from '../../components/map/map';
 import NearPlacesList from './components/near-places-list/near-places-list';
 import OfferGallery from './components/offer-gallery/offer-gallery';
 import OfferHost from './components/offer-host/offer-host';
@@ -19,8 +19,8 @@ type OfferScreenProps = {
 };
 
 function OfferScreen({
-  offersNearby = [],
-  comments = [],
+  offersNearby,
+  comments,
   offer,
   authorizationStatus,
 }: OfferScreenProps): JSX.Element {
@@ -105,7 +105,7 @@ function OfferScreen({
             />
           </div>
         </div>
-        <Map mapType='offer' />
+        {/* <Map mapType='offer' /> */}
       </section>
       {offersNearby.length > 0 && (
         <div className="container">

@@ -7,13 +7,15 @@ import PlacesSorting from './components/places-sorting/places-sorting';
 import Tabs from './components/tabs/tabs';
 import Map from '../../components/map/map';
 
+const ACTIVE_CITY = 'Amsterdam';
+
 type MainScreenProps = {
   offers: Offer[];
 };
 
-function MainScreen({ offers = [] }: MainScreenProps): JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-  const handleCardHover = (id: string | null) => setActiveOfferId(id);
+function MainScreen({ offers }: MainScreenProps): JSX.Element {
+  const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null);
+  const handleCardHover = (id: string | null) => setSelectedOfferId(id);
 
   if (!offers) {
     return (
@@ -23,13 +25,15 @@ function MainScreen({ offers = [] }: MainScreenProps): JSX.Element {
     );
   }
 
+  const cityOffers = offers.filter((offer) => offer.city.name === ACTIVE_CITY);
+  const city = cityOffers[0]?.city;
+
   return (
     <main className="page__main page__main--index">
       <Helmet>
-        {/* TODO: activeOfferId временно, только для линтера */}
         <title>6 cities</title>
       </Helmet>
-      <h1 className="visually-hidden">Cities {activeOfferId}</h1>
+      <h1 className="visually-hidden">Cities</h1>
       <Tabs />
       <div className="cities">
         <div className="cities__places-container container">
@@ -44,7 +48,13 @@ function MainScreen({ offers = [] }: MainScreenProps): JSX.Element {
             />
           </section>
           <div className="cities__right-section">
-            <Map />
+            {city && (
+              <Map
+                city={city}
+                offers={cityOffers}
+                selectedOfferId={selectedOfferId}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ type OfferReviewsProps = {
 };
 
 function OfferReviews({
-  comments = [],
+  comments,
   authorizationStatus,
 }: OfferReviewsProps): JSX.Element {
   return (

@@ -1,7 +1,7 @@
 import type { User } from './user';
 import type { CityName } from '../const';
 
-export type Location = {
+export type Point = {
   latitude: number;
   longitude: number;
   zoom: number;
@@ -9,7 +9,7 @@ export type Location = {
 
 export type City = {
   name: CityName;
-  location: Location;
+  location: Point;
 };
 
 export type OfferBase = {
@@ -18,7 +18,7 @@ export type OfferBase = {
   type: string;
   price: number;
   city: City;
-  location: Location;
+  location: Point;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
