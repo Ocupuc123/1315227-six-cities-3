@@ -1,7 +1,7 @@
 import { Link, useLocation, matchPath } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../utils/auth';
+import { AppRoute, AuthorizationStatus } from '../../../const';
+import { getAuthorizationStatus } from '../../../utils/auth';
 
 function Header(): JSX.Element {
   const { pathname } = useLocation();

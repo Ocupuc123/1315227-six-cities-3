@@ -1,7 +1,7 @@
 import { Outlet, useLocation, matchPath } from 'react-router-dom';
-import Header from '../components/header/header';
+import Header from './components/header/header';
 import { AppRoute } from '../const';
-import ScrollToTop from '../components/scroll-to-top/scroll-to-top';
+import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 
 type LayoutProps = {
   isFavoriteEmpty?: boolean;

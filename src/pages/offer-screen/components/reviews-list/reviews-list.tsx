@@ -1,5 +1,5 @@
-import type { Comment } from '../../types/comment';
-import { getRatingStyle } from '../../utils/offer';
+import type { Comment } from '../../../../types/comment';
+import { getRatingStyle } from '../../../../utils/offer';
 
 const MAX_REVIEWS = 10;
 

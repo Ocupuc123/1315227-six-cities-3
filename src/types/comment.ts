@@ -1,8 +1,4 @@
-type User = {
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
-};
+import type { User } from './user';
 
 export type Comment = {
   id: string;

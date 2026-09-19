@@ -1,5 +1,5 @@
-import type { Comment } from '../../types/comment';
-import { AuthorizationStatus } from '../../const';
+import type { Comment } from '../../../../types/comment';
+import { AuthorizationStatus } from '../../../../const';
 import Reviewslist from '../reviews-list/reviews-list';
 import ReviewsForm from '../reviews-form/reviews-form';
 
@@ -9,7 +9,7 @@ type OfferReviewsProps = {
 };
 
 function OfferReviews({
-  comments = [],
+  comments,
   authorizationStatus,
 }: OfferReviewsProps): JSX.Element {
   return (

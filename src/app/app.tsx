@@ -1,17 +1,17 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute } from '../../const';
-import { getAuthorizationStatus } from '../../utils/auth';
-import MainScreen from '../../pages/main-screen/main-screen';
-import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
-import LoginScreen from '../../pages/login-screen/login-screen';
-import OfferScreen from '../../pages/offer-screen/offer-screen';
-import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PrivateRoute from '../private-route/private-route';
-import GuestRoute from '../guest-route/guest-route';
-import Layout from '../../layout/layout';
-import type { Offer, FullOffer } from '../../types/offer';
-import type { Comment } from '../../types/comment';
+import { AppRoute } from '../const';
+import { getAuthorizationStatus } from '../utils/auth';
+import MainScreen from '../pages/main-screen/main-screen';
+import FavoritesScreen from '../pages/favorites-screen/favorites-screen';
+import LoginScreen from '../pages/login-screen/login-screen';
+import OfferScreen from '../pages/offer-screen/offer-screen';
+import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
+import PrivateRoute from './routing/private-route';
+import GuestRoute from './routing/guest-route';
+import Layout from '../layout/layout';
+import type { Offer, FullOffer } from '../types/offer';
+import type { Comment } from '../types/comment';
 
 type AppScreenProps = {
   offers: Offer[];
@@ -21,7 +21,7 @@ type AppScreenProps = {
   comments: Comment[];
 };
 
-function App({ offer, offers = [], favorites = [], offersNearby = [], comments = [] }: AppScreenProps) {
+function App({ offer, offers, favorites, offersNearby, comments }: AppScreenProps) {
   const authorizationStatus = getAuthorizationStatus();
   const isFavoriteEmpty = favorites.length === 0;
 

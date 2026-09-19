@@ -1,6 +1,6 @@
-import type { Offer } from '../../types/offer';
-import { CardType } from '../../const';
-import PlaceCard from '../../components/place-card/place-card';
+import type { Offer } from '../../../../types/offer';
+import { CardType } from '../../../../const';
+import PlaceCard from '../../../../components/place-card/place-card';
 
 const CardWrapper = {
   [CardType.City]: 'cities__places-list places__list tabs__content',
@@ -16,7 +16,7 @@ type OffersListProps = {
 };
 
 function OffersList({
-  offers = [],
+  offers,
   onCardHover,
   cardType = CardType.City,
 }: OffersListProps): JSX.Element {

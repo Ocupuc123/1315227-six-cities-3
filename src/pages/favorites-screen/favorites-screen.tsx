@@ -2,15 +2,15 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import type { Offer } from '../../types/offer';
-import FavoriteList from '../../components/favorites-list/favorites-list';
-import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import FavoriteList from './components/favorites-list/favorites-list';
+import FavoritesEmpty from './components/favorites-empty/favorites-empty';
 
 type FavoritesScreenProps = {
   favorites: Offer[];
 };
 
 function FavoritesScreen({
-  favorites = [],
+  favorites,
 }: FavoritesScreenProps): JSX.Element {
   if (!favorites) {
     return (

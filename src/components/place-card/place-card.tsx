@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import type { Offer } from '../../types/offer';
 import { CardType } from '../../const';
@@ -53,11 +54,20 @@ function PlaceCard({
     rating,
   } = offer;
 
+  const handleCardHover = (evt: MouseEvent<HTMLLIElement>) => {
+    evt.preventDefault();
+    onCardHover?.(id);
+  };
+
+  const handleCardLeave = () => {
+    onCardHover?.(null);
+  };
+
   return (
     <article
       className={`${CardWrapper[cardType]}__card place-card`}
-      onMouseEnter={() => onCardHover?.(id)}
-      onMouseLeave={() => onCardHover?.(null)}
+      onMouseEnter={handleCardHover}
+      onMouseLeave={handleCardLeave}
     >
       {isPremium && (
         <div className="place-card__mark">

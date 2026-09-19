@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Cities } from '../../const';
+import { Cities } from '../../../../const';
 
 function Tabs(): JSX.Element {
   return (
