@@ -14,28 +14,25 @@ import type { Offer, FullOffer } from '../types/offer';
 import type { Comment } from '../types/comment';
 
 type AppScreenProps = {
-  offers: Offer[];
-  favorites: Offer[];
   offersNearby: Offer[];
   offer: FullOffer;
   comments: Comment[];
 };
 
-function App({ offer, offers, favorites, offersNearby, comments }: AppScreenProps) {
+function App({ offer, offersNearby, comments }: AppScreenProps) {
   const authorizationStatus = getAuthorizationStatus();
-  const isFavoriteEmpty = favorites.length === 0;
 
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Main} element={<Layout isFavoriteEmpty={isFavoriteEmpty} />}>
-            <Route index element={<MainScreen offers={offers} />} />
+          <Route path={AppRoute.Main} element={<Layout />}>
+            <Route index element={<MainScreen />} />
             <Route
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute authorizationStatus={authorizationStatus}>
-                  <FavoritesScreen favorites={favorites} />
+                  <FavoritesScreen />
                 </PrivateRoute>
               }
             />

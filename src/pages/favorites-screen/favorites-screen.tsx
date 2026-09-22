@@ -1,15 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
-import type { Offer } from '../../types/offer';
 import FavoriteList from './components/favorites-list/favorites-list';
 import FavoritesEmpty from './components/favorites-empty/favorites-empty';
 
-type FavoritesScreenProps = {
-  favorites: Offer[];
-};
-
-function FavoritesScreen({ favorites }: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen(): JSX.Element {
+  const favorites = useAppSelector((state) => state.favorites);
   const hasFavorites = favorites.length > 0;
 
   return (

@@ -1,11 +1,8 @@
 import { Outlet, useLocation, matchPath } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
 import Header from './components/header/header';
 import { AppRoute } from '../const';
 import ScrollToTop from './components/scroll-to-top/scroll-to-top';
-
-type LayoutProps = {
-  isFavoriteEmpty?: boolean;
-};
 
 const getPageModifiers = (pathname: AppRoute, isFavoriteEmpty: boolean) => {
   const modifiers: string[] = [];
@@ -25,14 +22,16 @@ const getPageModifiers = (pathname: AppRoute, isFavoriteEmpty: boolean) => {
   return modifiers.join(' ');
 };
 
-function Layout({ isFavoriteEmpty = false }: LayoutProps): JSX.Element {
+function Layout(): JSX.Element {
+  const favorites = useAppSelector((state) => state.favorites);
+  const isFavoriteEmpty = favorites.length === 0;
   const { pathname } = useLocation();
 
   return (
     <div
       className={`page ${getPageModifiers(pathname as AppRoute, isFavoriteEmpty)}`}
     >
-      <Header />
+      <Header favoriteCount={favorites.length} />
       <Outlet />
       <ScrollToTop />
     </div>

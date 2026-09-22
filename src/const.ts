@@ -1,4 +1,4 @@
-export const ACTIVE_CITY = 'Amsterdam';
+export const DEFAULT_CITY = 'Paris';
 
 export const URL_MARKER_DEFAULT =
   '/img/pin.svg';

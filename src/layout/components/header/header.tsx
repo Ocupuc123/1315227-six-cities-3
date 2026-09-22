@@ -3,7 +3,11 @@ import Logo from '../logo/logo';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { getAuthorizationStatus } from '../../../utils/auth';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  favoriteCount: number;
+};
+
+function Header({ favoriteCount }: HeaderProps): JSX.Element {
   const { pathname } = useLocation();
   const isLoginPage = matchPath(AppRoute.Login, pathname);
   const authorizationStatus = getAuthorizationStatus();
@@ -33,7 +37,7 @@ function Header(): JSX.Element {
                         <span className="header__user-name user__name">
                           Oliver.conner@gmail.com
                         </span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__favorite-count">{favoriteCount}</span>
                       </>
                     ) : (
                       <span className="header__login">Sign in</span>
