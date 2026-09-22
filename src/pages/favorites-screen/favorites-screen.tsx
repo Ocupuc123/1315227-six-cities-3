@@ -9,17 +9,7 @@ type FavoritesScreenProps = {
   favorites: Offer[];
 };
 
-function FavoritesScreen({
-  favorites,
-}: FavoritesScreenProps): JSX.Element {
-  if (!favorites) {
-    return (
-      <main className="page__main page__main--favorites">
-        <div className="container">Загрузка...</div>
-      </main>
-    );
-  }
-
+function FavoritesScreen({ favorites }: FavoritesScreenProps): JSX.Element {
   const hasFavorites = favorites.length > 0;
 
   return (
@@ -43,7 +33,7 @@ function FavoritesScreen({
           )}
         </div>
       </main>
-      <footer className={`footer ${!hasFavorites ? 'container' : ''}`}>
+      <footer className="footer container">
         <Link className="footer__logo-link" to={AppRoute.Main}>
           <img
             className="footer__logo"
