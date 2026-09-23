@@ -1,9 +1,11 @@
 import { useRef, useEffect } from 'react';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import type { City, Offer } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
+
+const URL_MARKER_DEFAULT = '/img/pin.svg';
+const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,

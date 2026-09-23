@@ -1,11 +1,3 @@
-export const DEFAULT_CITY = 'Paris';
-
-export const URL_MARKER_DEFAULT =
-  '/img/pin.svg';
-
-export const URL_MARKER_CURRENT =
-  '/img/pin-active.svg';
-
 export const Cities = [
   'Paris',
   'Cologne',
@@ -16,6 +8,13 @@ export const Cities = [
 ] as const;
 
 export type CityName = (typeof Cities)[number];
+
+export enum SortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first'
+}
 
 export enum AppRoute {
   Main = '/',

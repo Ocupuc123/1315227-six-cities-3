@@ -1,7 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, loadOffers, loadFavorites } from './action';
 import type { Offer } from '../types/offer';
-import { DEFAULT_CITY, type CityName } from '../const';
+import type { CityName } from '../const';
+
+const DEFAULT_CITY = 'Paris';
 
 type State = {
   activeCity: CityName;
