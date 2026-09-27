@@ -1,3 +1,5 @@
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export const Cities = [
   'Paris',
   'Cologne',
@@ -14,6 +16,14 @@ export enum SortType {
   PriceLowToHigh = 'Price: low to high',
   PriceHighToLow = 'Price: high to low',
   TopRatedFirst = 'Top rated first'
+}
+
+export enum APIRoute {
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Сomments = '/comments',
+  Login = '/login',
+  Logout = '/logout'
 }
 
 export enum AppRoute {
