@@ -1,7 +1,9 @@
+import { MouseEvent } from 'react';
 import { Link, useLocation, matchPath } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute, AuthorizationStatus } from '../../../const';
-import { getAuthorizationStatus } from '../../../utils/auth';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { logoutAction } from '../../../store/api-actions';
 
 type HeaderProps = {
   favoriteCount: number;
@@ -10,7 +12,17 @@ type HeaderProps = {
 function Header({ favoriteCount }: HeaderProps): JSX.Element {
   const { pathname } = useLocation();
   const isLoginPage = matchPath(AppRoute.Login, pathname);
-  const authorizationStatus = getAuthorizationStatus();
+  const userData = useAppSelector((state) => state.userData);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
+
+  const dispatch = useAppDispatch();
+
+  const handleSignoutClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="header">
@@ -31,13 +43,25 @@ function Header({ favoriteCount }: HeaderProps): JSX.Element {
                         : AppRoute.Login
                     }
                   >
-                    <div className="header__avatar-wrapper user__avatar-wrapper" />
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                      {userData !== null && (
+                        <img
+                          className="header__avatar user__avatar"
+                          src={userData.avatarUrl}
+                          width={20}
+                          height={20}
+                          alt={userData.name}
+                        />
+                      )}
+                    </div>
                     {authorizationStatus === AuthorizationStatus.Auth ? (
                       <>
                         <span className="header__user-name user__name">
-                          Oliver.conner@gmail.com
+                          {userData?.email}
                         </span>
-                        <span className="header__favorite-count">{favoriteCount}</span>
+                        <span className="header__favorite-count">
+                          {favoriteCount}
+                        </span>
                       </>
                     ) : (
                       <span className="header__login">Sign in</span>
@@ -46,7 +70,11 @@ function Header({ favoriteCount }: HeaderProps): JSX.Element {
                 </li>
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" to={AppRoute.Main}>
+                    <Link
+                      className="header__nav-link"
+                      to={AppRoute.Main}
+                      onClick={handleSignoutClick}
+                    >
                       <span className="header__signout">Sign out</span>
                     </Link>
                   </li>

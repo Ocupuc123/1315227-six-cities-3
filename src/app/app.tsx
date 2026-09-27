@@ -44,7 +44,7 @@ function App({ offer, offersNearby, comments }: AppScreenProps) {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authorizationStatus={authorizationStatus}>
+                <PrivateRoute>
                   <FavoritesScreen />
                 </PrivateRoute>
               }
@@ -52,7 +52,7 @@ function App({ offer, offersNearby, comments }: AppScreenProps) {
             <Route
               path={AppRoute.Login}
               element={
-                <GuestRoute authorizationStatus={authorizationStatus}>
+                <GuestRoute>
                   <LoginScreen />
                 </GuestRoute>
               }

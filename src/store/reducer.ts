@@ -4,10 +4,11 @@ import {
   loadOffers,
   loadFavorites,
   requireAuthorization,
-  setError,
-  setOffersDataLoadingStatus
+  setOffersDataLoadingStatus,
+  setUserData,
 } from './action';
 import type { Offer } from '../types/offer';
+import type { UserData } from '../types/user-data';
 import { type CityName, AuthorizationStatus } from '../const';
 
 const DEFAULT_CITY = 'Paris';
@@ -19,6 +20,7 @@ type State = {
   authorizationStatus: AuthorizationStatus;
   error: string | null;
   isOffersDataLoading: boolean;
+  userData: UserData | null;
 };
 
 const initialState: State = {
@@ -28,6 +30,7 @@ const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isOffersDataLoading: false,
+  userData: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -44,10 +47,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
-    })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
