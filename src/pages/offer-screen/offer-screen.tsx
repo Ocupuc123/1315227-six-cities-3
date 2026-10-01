@@ -1,7 +1,7 @@
+import { useParams, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import type { Offer, FullOffer } from '../../types/offer';
-import type { Comment } from '../../types/comment';
-import { AuthorizationStatus, ButtonType } from '../../const';
+import { AppRoute, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import Map from '../../components/map/map';
@@ -10,21 +10,49 @@ import OfferGallery from './components/offer-gallery/offer-gallery';
 import OfferHost from './components/offer-host/offer-host';
 import OfferFeatures from './components/offer-features/offer-features';
 import OfferReviews from './components/offer-reviews/offer-reviews';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-actions';
+import { clearOffer } from '../../store/action';
 
-type OfferScreenProps = {
-  offersNearby: Offer[];
-  comments: Comment[];
-  offer: FullOffer;
-  authorizationStatus: AuthorizationStatus;
-};
+const MAX_NUMBER_MARKERS_FOR_MAP = 3;
 
-function OfferScreen({
-  offersNearby,
-  comments,
-  offer,
-  authorizationStatus,
-}: OfferScreenProps): JSX.Element {
+function OfferScreen(): JSX.Element {
+  const [notFound, setNotFound] = useState<boolean>(false);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector((state) => state.offer);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const comments = useAppSelector((state) => state.comments);
+  const isLoading = useAppSelector((state) => state.isOfferLoading);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus,
+  );
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatch(fetchOfferAction(id))
+      .unwrap()
+      .catch(() => setNotFound(true));
+
+    return () => {
+      dispatch(clearOffer());
+    };
+  }, [id, dispatch]);
+
+  if (notFound) {
+    return <Navigate to={AppRoute.NotFound} replace />;
+  }
+
+  if (!id || isLoading || !offer) {
+    return <LoadingScreen />;
+  }
+
   const {
+    location,
     title,
     type,
     price,
@@ -61,6 +89,7 @@ function OfferScreen({
               <BookmarkButton
                 isFavorite={isFavorite}
                 buttonType={ButtonType.Offer}
+                offerId={id}
               />
             </div>
             <div className="offer__rating rating">
@@ -97,10 +126,11 @@ function OfferScreen({
             <OfferReviews
               comments={comments}
               authorizationStatus={authorizationStatus}
+              offerId={id}
             />
           </div>
         </div>
-        {hasNearby && <Map mapType="offer" city={city} offers={offersNearby} />}
+        {hasNearby && <Map mapType="offer" city={city} offers={offersNearby.slice(0, MAX_NUMBER_MARKERS_FOR_MAP)} currentOfferLocation={location} />}
       </section>
       {hasNearby && (
         <div className="container">

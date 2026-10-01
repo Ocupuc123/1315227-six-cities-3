@@ -2,6 +2,9 @@ import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/offer';
 
+const LAYER_KEY = 'cb1_44ed_1_e1a13ff66092994678c0a819';
+const TILE_LAYER_URL = `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${LAYER_KEY}`;
+
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
   city: City,
@@ -19,13 +22,10 @@ function useMap(
         zoom: city.location.zoom,
       });
 
-      const layer = new TileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        },
-      );
+      const layer = new TileLayer(TILE_LAYER_URL, {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      });
 
       instance.addLayer(layer);
 

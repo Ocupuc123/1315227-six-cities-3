@@ -8,6 +8,7 @@ import OffersList from './components/offers-list/offers-list';
 import PlacesSorting from './components/places-sorting/places-sorting';
 import CitiesList from './components/cities-list/cities-list';
 import Map from '../../components/map/map';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 const DEFAULT_SORT_TYPE = SortType.Popular;
 
@@ -21,6 +22,9 @@ function MainScreen(): JSX.Element {
   const handleCardHover = (id: string | null) => setSelectedOfferId(id);
   const handleTabClick = (city: CityName) => dispatch(changeCity(city));
   const handleSortChange = (type: SortType) => setCurrentSortType(type);
+  const isLoading = useAppSelector(
+    (state) => state.isOffersDataLoading,
+  );
 
   const filteredOffers = useMemo(
     () => offers.filter((offer) => offer.city.name === activeCityName),
@@ -33,6 +37,53 @@ function MainScreen(): JSX.Element {
   );
 
   const currentCity = filteredOffers[0]?.city;
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingScreen />;
+    }
+
+    if (sortedOffers.length === 0) {
+      return (
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <p className="places__found">
+            There are no offers in the {activeCityName}.
+          </p>
+        </section>
+      );
+    }
+
+    return (
+      <>
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <b className="places__found">
+            {sortedOffers.length} {sortedOffers.length > 1 ? 'places' : 'place'}{' '}
+            to stay in {activeCityName}
+          </b>
+          <PlacesSorting
+            currentSortType={currentSortType}
+            onSortChange={handleSortChange}
+          />
+          <OffersList
+            offers={sortedOffers}
+            onCardHover={handleCardHover}
+            cardType={CardType.City}
+          />
+        </section>
+        <div className="cities__right-section">
+          {activeCityName && currentCity && (
+            <Map
+              city={currentCity}
+              offers={sortedOffers}
+              selectedOfferId={selectedOfferId}
+            />
+          )}
+        </div>
+      </>
+    );
+  };
 
   return (
     <main className="page__main page__main--index">
@@ -47,43 +98,7 @@ function MainScreen(): JSX.Element {
       />
       <div className="cities">
         <div className="cities__places-container container">
-          {sortedOffers.length === 0 ? (
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <p className="places__found">
-                There are no offers in the {activeCityName}.
-              </p>
-            </section>
-          ) : (
-            <>
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">
-                  {sortedOffers.length}{' '}
-                  {sortedOffers.length > 1 ? 'places' : 'place'} to stay in{' '}
-                  {activeCityName}
-                </b>
-                <PlacesSorting
-                  currentSortType={currentSortType}
-                  onSortChange={handleSortChange}
-                />
-                <OffersList
-                  offers={sortedOffers}
-                  onCardHover={handleCardHover}
-                  cardType={CardType.City}
-                />
-              </section>
-              <div className="cities__right-section">
-                {activeCityName && currentCity && (
-                  <Map
-                    city={currentCity}
-                    offers={sortedOffers}
-                    selectedOfferId={selectedOfferId}
-                  />
-                )}
-              </div>
-            </>
-          )}
+          {renderContent()}
         </div>
       </div>
     </main>

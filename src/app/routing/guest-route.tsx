@@ -6,10 +6,14 @@ type GuestRouteProps = {
   children: JSX.Element;
 };
 
-function GuestRoute({ children }: GuestRouteProps): JSX.Element {
+function GuestRoute({ children }: GuestRouteProps): JSX.Element | null {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus,
   );
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return null;
+  }
 
   return authorizationStatus !== AuthorizationStatus.Auth ? (
     children
