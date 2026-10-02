@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import useMap from '../../hooks/use-map';
-import type { City, Offer } from '../../types/offer';
+import type { City, Offer, Point } from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 
 const URL_MARKER_DEFAULT = '/img/pin.svg';
@@ -24,6 +24,7 @@ type MapProps = {
   city: City;
   offers: Offer[];
   selectedOfferId?: string | null;
+  currentOfferLocation?: Point | null;
 };
 
 function Map({
@@ -31,13 +32,19 @@ function Map({
   city,
   offers,
   selectedOfferId = null,
+  currentOfferLocation = null,
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      if (!map) {
+        return;
+      }
+
       const markerLayer = layerGroup().addTo(map);
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -58,6 +65,23 @@ function Map({
       };
     }
   }, [map, offers, selectedOfferId]);
+
+  useEffect(() => {
+    if (!map || !currentOfferLocation) {
+      return;
+    }
+
+    const marker = new Marker({
+      lat: currentOfferLocation.latitude,
+      lng: currentOfferLocation.longitude,
+    });
+
+    marker.setIcon(currentCustomIcon).addTo(map);
+
+    return () => {
+      map.removeLayer(marker);
+    };
+  }, [map, currentOfferLocation]);
 
   return <section className={`${mapType}__map map`} ref={mapRef} />;
 }

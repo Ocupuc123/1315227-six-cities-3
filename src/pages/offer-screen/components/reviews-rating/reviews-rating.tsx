@@ -13,9 +13,10 @@ const RATING_COUNT = RaringTitles.length;
 type ReviewsRatingProps = {
   rating: number;
   onChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
 };
 
-function ReviewsRating({ onChange, rating }: ReviewsRatingProps): JSX.Element {
+function ReviewsRating({ onChange, rating, isSubmitting }: ReviewsRatingProps): JSX.Element {
   return (
     <div className="reviews__rating-form form__rating">
       {Array.from({ length: RATING_COUNT }, (_, index) => {
@@ -33,6 +34,7 @@ function ReviewsRating({ onChange, rating }: ReviewsRatingProps): JSX.Element {
               type="radio"
               checked={rating === value}
               onChange={onChange}
+              disabled={isSubmitting}
             />
             <label
               htmlFor={`${startIndex}-star`}
