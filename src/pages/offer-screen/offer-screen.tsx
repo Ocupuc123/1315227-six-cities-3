@@ -1,5 +1,5 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AppRoute, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchOfferAction } from '../../store/api-actions';
 import { clearOffer } from '../../store/action';
 
-const MAX_NUMBER_MARKERS_FOR_MAP = 3;
+const MAX_OFFERS_NEARBY_COUNT = 3;
 
 function OfferScreen(): JSX.Element {
   const [notFound, setNotFound] = useState<boolean>(false);
@@ -27,6 +27,11 @@ function OfferScreen(): JSX.Element {
   const isLoading = useAppSelector((state) => state.isOfferLoading);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus,
+  );
+
+  const offersNearbyLimited = useMemo(
+    () => offersNearby.slice(0, MAX_OFFERS_NEARBY_COUNT),
+    [offersNearby],
   );
 
   useEffect(() => {
@@ -67,7 +72,7 @@ function OfferScreen(): JSX.Element {
     maxAdults,
   } = offer;
 
-  const hasNearby = offersNearby.length > 0;
+  const hasNearby = offersNearbyLimited.length > 0;
   const city = offer.city;
 
   return (
@@ -130,7 +135,14 @@ function OfferScreen(): JSX.Element {
             />
           </div>
         </div>
-        {hasNearby && <Map mapType="offer" city={city} offers={offersNearby.slice(0, MAX_NUMBER_MARKERS_FOR_MAP)} currentOfferLocation={location} />}
+        {hasNearby && (
+          <Map
+            mapType="offer"
+            city={city}
+            offers={offersNearbyLimited}
+            currentOfferLocation={location}
+          />
+        )}
       </section>
       {hasNearby && (
         <div className="container">
@@ -138,7 +150,7 @@ function OfferScreen(): JSX.Element {
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <NearPlacesList offersNearby={offersNearby} />
+            <NearPlacesList offersNearby={offersNearbyLimited} />
           </section>
         </div>
       )}
