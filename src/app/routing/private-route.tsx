@@ -2,11 +2,22 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 
-type PrivateRouteProps = {
-  children: JSX.Element;
+type Access = 'auth' | 'guest';
+
+const RedirectMapping: Record<Access, AppRoute> = {
+  auth: AppRoute.Login,
+  guest: AppRoute.Main,
 };
 
-function PrivateRoute({ children }: PrivateRouteProps): JSX.Element | null {
+type PrivateRouteProps = {
+  children: JSX.Element;
+  access: Access;
+};
+
+function PrivateRoute({
+  children,
+  access,
+}: PrivateRouteProps): JSX.Element | null {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus,
   );
@@ -15,10 +26,13 @@ function PrivateRoute({ children }: PrivateRouteProps): JSX.Element | null {
     return null;
   }
 
-  return authorizationStatus === AuthorizationStatus.Auth ? (
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const hasAccess = access === 'auth' ? isAuth : !isAuth;
+
+  return hasAccess ? (
     children
   ) : (
-    <Navigate to={AppRoute.Login} replace />
+    <Navigate to={RedirectMapping[access]} replace />
   );
 }
 
