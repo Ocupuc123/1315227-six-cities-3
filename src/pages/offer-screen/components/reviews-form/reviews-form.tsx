@@ -2,6 +2,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import ReviewsRating from '../reviews-rating/reviews-rating';
 import { addCommentAction } from '../../../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { getCommentSubmittingStatus } from '../../../../store/app-data/selectors';
 import { toast } from 'react-toastify';
 
 const MIN_REVIEW_LENGTH = 50;
@@ -21,7 +22,7 @@ type ReviewsFormProps = {
 
 function ReviewsForm({ offerId }: ReviewsFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isSubmitting = useAppSelector((state) => state.isCommentSubmitting);
+  const isSubmitting = useAppSelector(getCommentSubmittingStatus);
 
   const [formData, setFormData] = useState<FormData>({
     review: '',

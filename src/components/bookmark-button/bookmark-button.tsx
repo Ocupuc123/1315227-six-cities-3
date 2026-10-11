@@ -6,6 +6,7 @@ import {
   AuthorizationStatus,
   FavoriteStatus,
 } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { toggleFavoriteAction } from '../../store/api-actions';
 import { toast } from 'react-toastify';
@@ -43,9 +44,7 @@ function BookmarkButton({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const handleButtonClick = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();

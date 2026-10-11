@@ -7,7 +7,6 @@ import LoginScreen from '../pages/login-screen/login-screen';
 import OfferScreen from '../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../pages/not-found-screen/not-found-screen';
 import PrivateRoute from './routing/private-route';
-import GuestRoute from './routing/guest-route';
 import Layout from '../layout/layout';
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute>
+                <PrivateRoute access='auth'>
                   <FavoritesScreen />
                 </PrivateRoute>
               }
@@ -28,9 +27,9 @@ function App() {
             <Route
               path={AppRoute.Login}
               element={
-                <GuestRoute>
+                <PrivateRoute access='guest'>
                   <LoginScreen />
-                </GuestRoute>
+                </PrivateRoute>
               }
             />
             <Route path={AppRoute.Offer} element={<OfferScreen />} />

@@ -1,42 +1,47 @@
-import { useState, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { CardType, Cities, SortType, type CityName } from '../../const';
+import { getActiveCity, getSortType } from '../../store/app-process/selectors';
+import {
+  getSortedOffers,
+  getOffersListLoadingStatus,
+} from '../../store/app-data/selectors';
+import {
+  changeCity,
+  changeSortType,
+} from '../../store/app-process/app-process';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
-import { sortOffers } from '../../utils/offer';
 import OffersList from './components/offers-list/offers-list';
 import PlacesSorting from './components/places-sorting/places-sorting';
 import CitiesList from './components/cities-list/cities-list';
 import Map from '../../components/map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const DEFAULT_SORT_TYPE = SortType.Popular;
-
 function MainScreen(): JSX.Element {
-  const [currentSortType, setCurrentSortType] =
-    useState<SortType>(DEFAULT_SORT_TYPE);
-  const activeCityName = useAppSelector((state) => state.activeCity);
-  const offers = useAppSelector((state) => state.offers);
+  const activeCityName = useAppSelector(getActiveCity);
+  const currentSortType = useAppSelector(getSortType);
+  const sortedOffers = useAppSelector(getSortedOffers);
+  const isLoading = useAppSelector(getOffersListLoadingStatus);
+
   const dispatch = useAppDispatch();
   const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null);
-  const handleCardHover = (id: string | null) => setSelectedOfferId(id);
-  const handleTabClick = (city: CityName) => dispatch(changeCity(city));
-  const handleSortChange = (type: SortType) => setCurrentSortType(type);
-  const isLoading = useAppSelector(
-    (state) => state.isOffersDataLoading,
+
+  const handleCardHover = useCallback(
+    (id: string | null) => setSelectedOfferId(id),
+    [],
   );
 
-  const filteredOffers = useMemo(
-    () => offers.filter((offer) => offer.city.name === activeCityName),
-    [offers, activeCityName],
+  const handleTabClick = useCallback(
+    (city: CityName) => dispatch(changeCity(city)),
+    [dispatch],
   );
 
-  const sortedOffers = useMemo(
-    () => sortOffers(filteredOffers, currentSortType),
-    [filteredOffers, currentSortType],
+  const handleSortChange = useCallback(
+    (type: SortType) => dispatch(changeSortType(type)),
+    [dispatch],
   );
 
-  const currentCity = filteredOffers[0]?.city;
+  const currentCity = sortedOffers[0]?.city;
 
   const renderContent = () => {
     if (isLoading) {

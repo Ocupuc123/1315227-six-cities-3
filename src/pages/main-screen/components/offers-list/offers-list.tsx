@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Offer } from '../../../../types/offer';
 import { CardType } from '../../../../const';
 import PlaceCard from '../../../../components/place-card/place-card';
@@ -15,7 +16,7 @@ type OffersListProps = {
   cardType?: OffersListCardType;
 };
 
-function OffersList({
+function OffersListComponent({
   offers,
   onCardHover,
   cardType = CardType.City,
@@ -33,5 +34,7 @@ function OffersList({
     </div>
   );
 }
+
+const OffersList = memo(OffersListComponent);
 
 export default OffersList;

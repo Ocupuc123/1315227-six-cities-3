@@ -1,24 +1,42 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
+import {
+  getAuthorizationStatus,
+  getAuthCheckedStatus,
+} from '../../store/user-process/selectors';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+
+type Access = 'auth' | 'guest';
+
+const RedirectMapping: Record<Access, AppRoute> = {
+  auth: AppRoute.Login,
+  guest: AppRoute.Main,
+};
 
 type PrivateRouteProps = {
   children: JSX.Element;
+  access: Access;
 };
 
-function PrivateRoute({ children }: PrivateRouteProps): JSX.Element | null {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+function PrivateRoute({
+  children,
+  access,
+}: PrivateRouteProps): JSX.Element | null {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return null;
+  if (!isAuthChecked) {
+    return <LoadingScreen />;
   }
 
-  return authorizationStatus === AuthorizationStatus.Auth ? (
+  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const hasAccess = access === 'auth' ? isAuth : !isAuth;
+
+  return hasAccess ? (
     children
   ) : (
-    <Navigate to={AppRoute.Login} replace />
+    <Navigate to={RedirectMapping[access]} replace />
   );
 }
 

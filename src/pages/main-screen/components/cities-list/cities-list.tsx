@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { type CityName, AppRoute } from '../../../../const';
 
@@ -8,7 +8,7 @@ type CitiesListProps = {
   onClick: (city: CityName) => void;
 };
 
-function CitiesList({
+function CitiesListComponent({
   cities,
   activeCityName,
   onClick,
@@ -41,5 +41,7 @@ function CitiesList({
     </div>
   );
 }
+
+const CitiesList = memo(CitiesListComponent);
 
 export default CitiesList;

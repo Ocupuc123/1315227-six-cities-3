@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { SortType } from '../../../../const';
 
 type PlacesSortingProps = {
@@ -6,7 +6,7 @@ type PlacesSortingProps = {
   onSortChange: (type: SortType) => void;
 };
 
-function PlacesSorting({
+function PlacesSortingComponent({
   currentSortType,
   onSortChange,
 }: PlacesSortingProps): JSX.Element {
@@ -55,5 +55,7 @@ function PlacesSorting({
     </form>
   );
 }
+
+const PlacesSorting = memo(PlacesSortingComponent);
 
 export default PlacesSorting;

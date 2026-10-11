@@ -4,6 +4,7 @@ import Logo from '../logo/logo';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { logoutAction } from '../../../store/api-actions';
+import { getAuthorizationStatus, getUserInfo } from '../../../store/user-process/selectors';
 
 type HeaderProps = {
   favoriteCount: number;
@@ -12,10 +13,8 @@ type HeaderProps = {
 function Header({ favoriteCount }: HeaderProps): JSX.Element {
   const { pathname } = useLocation();
   const isLoginPage = matchPath(AppRoute.Login, pathname);
-  const userData = useAppSelector((state) => state.userData);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const userData = useAppSelector(getUserInfo);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 

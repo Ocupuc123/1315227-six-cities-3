@@ -9,6 +9,12 @@ export const Cities = [
 
 export type CityName = (typeof Cities)[number];
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  App = 'APP',
+}
+
 export enum FavoriteStatus {
   Removed = 0,
   Added = 1,
@@ -18,7 +24,7 @@ export enum SortType {
   Popular = 'Popular',
   PriceLowToHigh = 'Price: low to high',
   PriceHighToLow = 'Price: high to low',
-  TopRatedFirst = 'Top rated first'
+  TopRatedFirst = 'Top rated first',
 }
 
 export enum APIRoute {
@@ -26,7 +32,7 @@ export enum APIRoute {
   Favorite = '/favorite',
   Comments = '/comments',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
 }
 
 export enum AppRoute {
@@ -34,7 +40,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  NotFound = '/404'
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
