@@ -23,6 +23,7 @@ export type AppData = {
   isOffersListLoading: boolean;
   isOfferDetailsLoading: boolean;
   isCommentSubmitting: boolean;
+  hasError: boolean;
 };
 
 export type State = ReturnType<typeof store.getState>;
