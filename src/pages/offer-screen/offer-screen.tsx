@@ -3,6 +3,11 @@ import { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AppRoute, ButtonType } from '../../const';
 import { getRatingStyle } from '../../utils/offer';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOfferAction } from '../../store/api-actions';
+import { getOfferDetails, getOffersNearby, getComments, getOfferDetailsLoadingStatus } from '../../store/app-data/selectors';
+import { clearOffer } from '../../store/app-data/app-data';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 import Map from '../../components/map/map';
 import NearPlacesList from './components/near-places-list/near-places-list';
@@ -11,9 +16,6 @@ import OfferHost from './components/offer-host/offer-host';
 import OfferFeatures from './components/offer-features/offer-features';
 import OfferReviews from './components/offer-reviews/offer-reviews';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchOfferAction } from '../../store/api-actions';
-import { clearOffer } from '../../store/action';
 
 const MAX_OFFERS_NEARBY_COUNT = 3;
 
@@ -21,13 +23,11 @@ function OfferScreen(): JSX.Element {
   const [notFound, setNotFound] = useState<boolean>(false);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const offer = useAppSelector((state) => state.offer);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const comments = useAppSelector((state) => state.comments);
-  const isLoading = useAppSelector((state) => state.isOfferLoading);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const offer = useAppSelector(getOfferDetails);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const comments = useAppSelector(getComments);
+  const isLoading = useAppSelector(getOfferDetailsLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const offersNearbyLimited = useMemo(
     () => offersNearby.slice(0, MAX_OFFERS_NEARBY_COUNT),

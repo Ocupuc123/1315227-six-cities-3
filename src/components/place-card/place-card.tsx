@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { Link } from 'react-router-dom';
 import type { Offer } from '../../types/offer';
 import { CardType } from '../../const';
@@ -34,7 +34,7 @@ type PlaceCardProps = {
   cardType?: CardType;
 };
 
-function PlaceCard({
+function PlaceCardComponent({
   offer,
   onCardHover,
   cardType = CardType.City,
@@ -111,5 +111,7 @@ function PlaceCard({
     </article>
   );
 }
+
+const PlaceCard = memo(PlaceCardComponent);
 
 export default PlaceCard;

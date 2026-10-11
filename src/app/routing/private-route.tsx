@@ -1,6 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
+import {
+  getAuthorizationStatus,
+  getAuthCheckedStatus,
+} from '../../store/user-process/selectors';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type Access = 'auth' | 'guest';
 
@@ -18,12 +23,11 @@ function PrivateRoute({
   children,
   access,
 }: PrivateRouteProps): JSX.Element | null {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus,
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return null;
+  if (!isAuthChecked) {
+    return <LoadingScreen />;
   }
 
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
