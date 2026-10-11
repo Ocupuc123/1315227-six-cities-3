@@ -5,6 +5,7 @@ import { getActiveCity, getSortType } from '../../store/app-process/selectors';
 import {
   getSortedOffers,
   getOffersListLoadingStatus,
+  getErrorStatus,
 } from '../../store/app-data/selectors';
 import {
   changeCity,
@@ -16,12 +17,14 @@ import PlacesSorting from './components/places-sorting/places-sorting';
 import CitiesList from './components/cities-list/cities-list';
 import Map from '../../components/map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
+import ErrorScreen from './components/error-screen/error-screen';
 
 function MainScreen(): JSX.Element {
   const activeCityName = useAppSelector(getActiveCity);
   const currentSortType = useAppSelector(getSortType);
   const sortedOffers = useAppSelector(getSortedOffers);
   const isLoading = useAppSelector(getOffersListLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
 
   const dispatch = useAppDispatch();
   const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null);
@@ -46,6 +49,10 @@ function MainScreen(): JSX.Element {
   const renderContent = () => {
     if (isLoading) {
       return <LoadingScreen />;
+    }
+
+    if (hasError) {
+      return <ErrorScreen />;
     }
 
     if (sortedOffers.length === 0) {
@@ -91,7 +98,7 @@ function MainScreen(): JSX.Element {
   };
 
   return (
-    <main className="page__main page__main--index">
+    <main className={`page__main page__main--index ${hasError ? 'page__main--index-empty' : ''}`}>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
@@ -102,7 +109,9 @@ function MainScreen(): JSX.Element {
         onClick={handleTabClick}
       />
       <div className="cities">
-        <div className="cities__places-container container">
+        <div
+          className={`cities__places-container container ${hasError ? 'cities__places-container--empty' : ''}`}
+        >
           {renderContent()}
         </div>
       </div>

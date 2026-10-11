@@ -18,6 +18,7 @@ const initialState: AppData = {
   isOffersListLoading: false,
   isOfferDetailsLoading: false,
   isCommentSubmitting: false,
+  hasError: false,
 };
 
 export const appData = createSlice({
@@ -82,9 +83,11 @@ export const appData = createSlice({
       })
       .addCase(fetchOffersAction.pending, (state) => {
         state.isOffersListLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersListLoading = false;
+        state.hasError = true;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;

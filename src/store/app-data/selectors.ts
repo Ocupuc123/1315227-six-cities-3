@@ -30,6 +30,8 @@ export const getComments = (state: State): Comment[] =>
 export const getFavorites = (state: State): Offer[] =>
   state[NameSpace.Data].favorites;
 
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
+
 export const getFavoritesCount = createSelector(
   [getFavorites],
   (favorites) => favorites.length,
