@@ -2,7 +2,39 @@ import type { UserData } from '../types/user-data';
 import type { AuthData } from '../types/auth-data';
 import type { Offer, FullOffer } from '../types/offer';
 import type { Comment, CommentData } from '../types/comment';
+import type { State } from '../types/state';
+import { Action } from 'redux';
+import { createAPI } from '../services/api';
+import { NameSpace, AuthorizationStatus, DEFAULT_CITY, DEFAULT_SORT_TYPE } from '../const';
 import { name, system, internet, random, datatype, date, lorem } from 'faker';
+import { ThunkDispatch } from 'redux-thunk';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  [NameSpace.User]: {
+    authorizationStatus: AuthorizationStatus.NoAuth,
+    userData: null,
+  },
+  [NameSpace.Data]: {
+    offers: [],
+    offer: null,
+    offersNearby: [],
+    comments: [],
+    favorites: [],
+    isOffersListLoading: false,
+    isOfferDetailsLoading: false,
+    isCommentSubmitting: false,
+    hasError: false,
+  },
+  [NameSpace.App]: {
+    activeCity: DEFAULT_CITY,
+    sortType: DEFAULT_SORT_TYPE,
+  },
+  ...initialState ?? {},
+});
 
 export const makeFakeCommentData = (): CommentData => ({
   offerId: crypto.randomUUID(),
