@@ -60,5 +60,5 @@ export enum ButtonType {
   Offer = 'offer',
 }
 
-export const DEFAULT_CITY = 'Paris';
+export const DEFAULT_CITY: CityName = 'Paris';
 export const DEFAULT_SORT_TYPE = SortType.Popular;

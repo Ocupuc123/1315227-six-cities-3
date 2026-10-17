@@ -2,16 +2,10 @@ import { Outlet, useLocation, matchPath } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
 import Header from './components/header/header';
 import { AppRoute } from '../const';
-import {
-  getFavoritesCount,
-  getIsFavoritesEmpty,
-} from '../store/app-data/selectors';
+import { getFavoritesCount, getIsFavoritesEmpty } from '../store/selectors';
 import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 
-const getPageModifiers = (
-  pathname: AppRoute,
-  isFavoriteEmpty: boolean,
-) => {
+const getPageModifiers = (pathname: AppRoute, isFavoriteEmpty: boolean) => {
   const modifiers: string[] = [];
 
   if (pathname === AppRoute.Main) {

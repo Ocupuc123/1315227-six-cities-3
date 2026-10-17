@@ -3,10 +3,10 @@ import { Helmet } from 'react-helmet-async';
 import { CardType, Cities, SortType, type CityName } from '../../const';
 import { getActiveCity, getSortType } from '../../store/app-process/selectors';
 import {
-  getSortedOffers,
   getOffersListLoadingStatus,
   getErrorStatus,
 } from '../../store/app-data/selectors';
+import { getSortedOffers } from '../../store/selectors';
 import {
   changeCity,
   changeSortType,
@@ -98,7 +98,9 @@ function MainScreen(): JSX.Element {
   };
 
   return (
-    <main className={`page__main page__main--index ${hasError ? 'page__main--index-empty' : ''}`}>
+    <main
+      className={`page__main page__main--index ${hasError ? 'page__main--index-empty' : ''}`}
+    >
       <Helmet>
         <title>6 cities</title>
       </Helmet>
