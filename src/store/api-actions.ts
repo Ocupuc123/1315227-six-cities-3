@@ -4,7 +4,7 @@ import { AppDispatch, State } from '../types/state';
 import { saveToken, dropToken, getToken } from '../services/token';
 import { APIRoute, FavoriteStatus } from '../const';
 import type { Offer, FullOffer } from '../types/offer';
-import type { Comment } from '../types/comment';
+import type { Comment, CommentData } from '../types/comment';
 import type { AuthData } from '../types/auth-data';
 import type { AuthInfo, UserData } from '../types/user-data';
 import { splitAuthInfo } from '../utils/common';
@@ -22,7 +22,7 @@ export const toggleFavoriteAction = createAsyncThunk<
 
 export const addCommentAction = createAsyncThunk<
   Comment,
-  { offerId: string; comment: string; rating: number },
+  CommentData,
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('data/addComment', async ({ offerId, comment, rating }, { extra: api }) => {
   const { data } = await api.post<Comment>(`${APIRoute.Comments}/${offerId}`, {

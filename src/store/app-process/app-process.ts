@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, SortType, type CityName } from '../../const';
+import { NameSpace, SortType, DEFAULT_CITY, DEFAULT_SORT_TYPE, type CityName } from '../../const';
 import type { AppProcess } from '../../types/state';
-
-const DEFAULT_CITY = 'Paris';
-const DEFAULT_SORT_TYPE = SortType.Popular;
 
 const initialState: AppProcess = {
   activeCity: DEFAULT_CITY,
