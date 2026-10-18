@@ -1,54 +1,30 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { getActiveCity, getSortType } from '../app-process/selectors';
-import { sortOffers } from '../../utils/offer';
 import type { State } from '../../types/state';
 import type { Offer, FullOffer } from '../../types/offer';
 import type { Comment } from '../../types/comment';
 
-export const getOffersListLoadingStatus = (state: State): boolean =>
+export const getOffersListLoadingStatus = (state: Pick<State, NameSpace.Data>): boolean =>
   state[NameSpace.Data].isOffersListLoading;
 
-export const getOfferDetailsLoadingStatus = (state: State): boolean =>
+export const getOfferDetailsLoadingStatus = (state: Pick<State, NameSpace.Data>): boolean =>
   state[NameSpace.Data].isOfferDetailsLoading;
 
-export const getCommentSubmittingStatus = (state: State): boolean =>
+export const getCommentSubmittingStatus = (state: Pick<State, NameSpace.Data>): boolean =>
   state[NameSpace.Data].isCommentSubmitting;
 
-export const getOffersList = (state: State): Offer[] =>
+export const getOffersList = (state: Pick<State, NameSpace.Data>): Offer[] =>
   state[NameSpace.Data].offers;
 
-export const getOfferDetails = (state: State): FullOffer | null =>
+export const getOfferDetails = (state: Pick<State, NameSpace.Data>): FullOffer | null =>
   state[NameSpace.Data].offer;
 
-export const getOffersNearby = (state: State): Offer[] =>
+export const getOffersNearby = (state: Pick<State, NameSpace.Data>): Offer[] =>
   state[NameSpace.Data].offersNearby;
 
-export const getComments = (state: State): Comment[] =>
+export const getComments = (state: Pick<State, NameSpace.Data>): Comment[] =>
   state[NameSpace.Data].comments;
 
-export const getFavorites = (state: State): Offer[] =>
+export const getFavorites = (state: Pick<State, NameSpace.Data>): Offer[] =>
   state[NameSpace.Data].favorites;
 
-export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
-
-export const getFavoritesCount = createSelector(
-  [getFavorites],
-  (favorites) => favorites.length,
-);
-
-export const getIsFavoritesEmpty = createSelector(
-  [getFavorites],
-  (favorites) => favorites.length === 0,
-);
-
-export const getFilteredOffers = createSelector(
-  [getOffersList, getActiveCity],
-  (offers, activeCity) =>
-    offers.filter((offer) => offer.city.name === activeCity),
-);
-
-export const getSortedOffers = createSelector(
-  [getFilteredOffers, getSortType],
-  (offers, sortType) => sortOffers(offers, sortType),
-);
+export const getErrorStatus = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].hasError;

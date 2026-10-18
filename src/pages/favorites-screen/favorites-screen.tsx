@@ -2,10 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AppRoute } from '../../const';
-import {
-  getFavorites,
-  getIsFavoritesEmpty,
-} from '../../store/app-data/selectors';
+import { getIsFavoritesEmpty } from '../../store/selectors';
+import { getFavorites } from '../../store/app-data/selectors';
 import FavoriteList from './components/favorites-list/favorites-list';
 import FavoritesEmpty from './components/favorites-empty/favorites-empty';
 
