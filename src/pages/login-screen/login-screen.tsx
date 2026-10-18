@@ -1,10 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
+import { useRef, useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import { toast } from 'react-toastify';
+import { getRandomCity } from '../../utils/common';
+import { changeCity } from '../../store/app-process/app-process';
 
 const ERROR_PASSWORD_MESSAGE =
   'The password must contain at least one letter and one digit, without spaces.';
@@ -14,6 +16,7 @@ const PASSWORD_HAS_DIGIT = /\d/;
 const PASSWORD_HAS_SPACE = /\s/;
 
 function LoginScreen(): JSX.Element {
+  const [randomCity] = useState(() => getRandomCity());
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -40,6 +43,10 @@ function LoginScreen(): JSX.Element {
         password,
       }),
     );
+  };
+
+  const handleCityClick = () => {
+    dispatch(changeCity(randomCity));
   };
 
   return (
@@ -82,8 +89,12 @@ function LoginScreen(): JSX.Element {
         </section>
         <section className="locations locations--login locations--current">
           <div className="locations__item">
-            <Link className="locations__item-link" to={AppRoute.Main}>
-              <span>Amsterdam</span>
+            <Link
+              className="locations__item-link"
+              to={AppRoute.Main}
+              onClick={handleCityClick}
+            >
+              <span>{randomCity}</span>
             </Link>
           </div>
         </section>

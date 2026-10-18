@@ -1,4 +1,5 @@
 import type { AuthInfo, UserData } from '../types/user-data';
+import { type CityName, Cities } from '../const';
 
 type AuthPayload = {
   token: string;
@@ -15,3 +16,6 @@ export const splitAuthInfo = (data: AuthInfo): AuthPayload => {
     info: userData,
   };
 };
+
+export const getRandomCity = (): CityName =>
+  Cities[Math.floor(Math.random() * Cities.length)];
