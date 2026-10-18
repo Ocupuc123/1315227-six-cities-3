@@ -10,6 +10,7 @@ import { StatusCodes } from 'http-status-codes';
 
 const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
+const TOKEN_HEADER_NAME = 'x-token';
 
 type DetailMessageType = {
   type: string;
@@ -35,7 +36,7 @@ export const createAPI = (): AxiosInstance => {
     const token = getToken();
 
     if (token) {
-      config.headers['x-token'] = token;
+      config.headers[TOKEN_HEADER_NAME] = token;
     }
 
     return config;
