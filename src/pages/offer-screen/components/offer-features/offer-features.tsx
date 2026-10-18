@@ -11,16 +11,19 @@ function OfferFeatures({
   bedrooms,
   maxAdults,
 }: OfferFeaturesProps): JSX.Element {
+  const bedroomsText = `${bedrooms} ${bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}`;
+  const adultsText = `Max ${maxAdults} ${maxAdults === 1 ? 'adult' : 'adults'}`;
+
   return (
     <ul className="offer__features">
       <li className="offer__feature offer__feature--entire">
         {capitalizeString(type)}
       </li>
       <li className="offer__feature offer__feature--bedrooms">
-        {bedrooms} Bedrooms
+        {bedroomsText}
       </li>
       <li className="offer__feature offer__feature--adults">
-        Max {maxAdults} adults
+        {adultsText}
       </li>
     </ul>
   );

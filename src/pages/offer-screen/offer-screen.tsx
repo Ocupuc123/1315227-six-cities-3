@@ -39,11 +39,18 @@ function OfferScreen(): JSX.Element {
       return;
     }
 
+    let isMounted = true;
+
     dispatch(fetchOfferAction(id))
       .unwrap()
-      .catch(() => setNotFound(true));
+      .catch(() => {
+        if (isMounted) {
+          setNotFound(true);
+        }
+      });
 
     return () => {
+      isMounted = false;
       dispatch(clearOffer());
     };
   }, [id, dispatch]);

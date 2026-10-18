@@ -16,9 +16,10 @@ describe('Component: OfferFeatures', () => {
     expect(screen.getByText('Hotel')).toBeInTheDocument();
   });
 
-  it('should render single bedroom count without pluralization issue', () => {
+  it('should use singular form for one bedroom and one adult', () => {
     render(<OfferFeatures type="room" bedrooms={1} maxAdults={1} />);
 
-    expect(screen.getByText('1 Bedrooms')).toBeInTheDocument();
+    expect(screen.getByText('1 Bedroom')).toBeInTheDocument();
+    expect(screen.getByText('Max 1 adult')).toBeInTheDocument();
   });
 });
