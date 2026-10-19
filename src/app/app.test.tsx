@@ -26,7 +26,12 @@ describe('Application Routing', () => {
   it('should render "MainScreen" when user navigate to "/"', () => {
     renderRoute(AppRoute.Main);
 
-    expect(screen.getByText(/There are no offers in the Paris/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /We could not find any property available at the moment in Paris/i,
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByText('No places to stay available')).toBeInTheDocument();
   });
 
   it('should render "LoginScreen" when user navigate to "/login"', () => {
