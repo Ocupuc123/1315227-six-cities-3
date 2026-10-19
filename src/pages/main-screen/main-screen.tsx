@@ -45,6 +45,7 @@ function MainScreen(): JSX.Element {
   );
 
   const currentCity = sortedOffers[0]?.city;
+  const isEmpty = !isLoading && !hasError && sortedOffers.length === 0;
 
   const renderContent = () => {
     if (isLoading) {
@@ -55,14 +56,20 @@ function MainScreen(): JSX.Element {
       return <ErrorScreen />;
     }
 
-    if (sortedOffers.length === 0) {
+    if (isEmpty) {
       return (
-        <section className="cities__places places">
-          <h2 className="visually-hidden">Places</h2>
-          <p className="places__found">
-            There are no offers in the {activeCityName}.
-          </p>
-        </section>
+        <>
+          <section className="cities__no-places">
+            <div className="cities__status-wrapper tabs__content">
+              <b className="cities__status">No places to stay available</b>
+              <p className="cities__status-description">
+                We could not find any property available at the moment in{' '}
+                {activeCityName}
+              </p>
+            </div>
+          </section>
+          <div className="cities__right-section" />
+        </>
       );
     }
 
@@ -99,7 +106,7 @@ function MainScreen(): JSX.Element {
 
   return (
     <main
-      className={`page__main page__main--index ${hasError ? 'page__main--index-empty' : ''}`}
+      className={`page__main page__main--index ${hasError || isEmpty ? 'page__main--index-empty' : ''}`}
     >
       <Helmet>
         <title>6 cities</title>
@@ -112,7 +119,7 @@ function MainScreen(): JSX.Element {
       />
       <div className="cities">
         <div
-          className={`cities__places-container container ${hasError ? 'cities__places-container--empty' : ''}`}
+          className={`cities__places-container container ${hasError || isEmpty ? 'cities__places-container--empty' : ''}`}
         >
           {renderContent()}
         </div>

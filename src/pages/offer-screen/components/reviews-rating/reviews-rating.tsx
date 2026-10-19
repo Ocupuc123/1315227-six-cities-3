@@ -22,7 +22,7 @@ function ReviewsRating({ onChange, rating, isSubmitting }: ReviewsRatingProps): 
       {Array.from({ length: RATING_COUNT }, (_, index) => {
         const value = RATING_COUNT - index;
         const startIndex = value.toString();
-        const id = `${value}-star`;
+        const id = `${value}-stars`;
 
         return (
           <Fragment key={id}>
@@ -30,14 +30,14 @@ function ReviewsRating({ onChange, rating, isSubmitting }: ReviewsRatingProps): 
               className="form__rating-input visually-hidden"
               name="rating"
               value={startIndex}
-              id={`${startIndex}-star`}
+              id={id}
               type="radio"
               checked={rating === value}
               onChange={onChange}
               disabled={isSubmitting}
             />
             <label
-              htmlFor={`${startIndex}-star`}
+              htmlFor={id}
               className="reviews__rating-label form__rating-label"
               title={RatingTitles[value - 1]}
             >
