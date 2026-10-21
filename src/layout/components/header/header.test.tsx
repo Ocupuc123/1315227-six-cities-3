@@ -104,6 +104,7 @@ describe('Component: Header', () => {
     expect(logoutAction).toHaveBeenCalledTimes(1);
     expect(mockStore.getActions()).toEqual([
       { type: 'user/logout' },
+      { type: `${NameSpace.Data}/clearFavorites`, payload: undefined },
     ]);
   });
 
