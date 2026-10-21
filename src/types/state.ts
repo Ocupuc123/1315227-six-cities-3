@@ -1,4 +1,7 @@
-import { store } from '../store/index';
+import type { ThunkDispatch } from '@reduxjs/toolkit';
+import type { AnyAction } from 'redux';
+import type { AxiosInstance } from 'axios';
+import { rootReducer } from '../store/root-reducer';
 import { AuthorizationStatus, type CityName, type SortType } from '../const';
 import type { UserData } from './user-data';
 import type { Offer, FullOffer } from './offer';
@@ -26,6 +29,6 @@ export type AppData = {
   hasError: boolean;
 };
 
-export type State = ReturnType<typeof store.getState>;
+export type State = ReturnType<typeof rootReducer>;
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<State, AxiosInstance, AnyAction>;
