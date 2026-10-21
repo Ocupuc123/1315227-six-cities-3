@@ -5,6 +5,7 @@ import { AppRoute, AuthorizationStatus } from '../../../const';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { logoutAction } from '../../../store/api-actions';
 import { getAuthorizationStatus, getUserInfo } from '../../../store/user-process/selectors';
+import { clearFavorites } from '../../../store/app-data/app-data';
 
 type HeaderProps = {
   favoriteCount: number;
@@ -21,6 +22,7 @@ function Header({ favoriteCount }: HeaderProps): JSX.Element {
   const handleSignoutClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
+    dispatch(clearFavorites());
   };
 
   return (

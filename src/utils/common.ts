@@ -1,5 +1,6 @@
 import type { AuthInfo, UserData } from '../types/user-data';
 import { type CityName, Cities } from '../const';
+import type { Offer } from '../types/offer';
 
 type AuthPayload = {
   token: string;
@@ -19,3 +20,9 @@ export const splitAuthInfo = (data: AuthInfo): AuthPayload => {
 
 export const getRandomCity = (): CityName =>
   Cities[Math.floor(Math.random() * Cities.length)];
+
+export const resetFavorite = (offers: Offer[]) => {
+  for (const offer of offers) {
+    offer.isFavorite = false;
+  }
+};

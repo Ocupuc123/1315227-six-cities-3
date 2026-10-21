@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import type { AppData } from '../../types/state';
+import { resetFavorite } from '../../utils/common';
 import {
   toggleFavoriteAction,
   addCommentAction,
@@ -29,6 +30,15 @@ export const appData = createSlice({
       state.offer = null;
       state.offersNearby = [];
       state.comments = [];
+    },
+    clearFavorites(state) {
+      state.favorites = [];
+      resetFavorite(state.offers);
+      resetFavorite(state.offersNearby);
+
+      if (state.offer) {
+        state.offer.isFavorite = false;
+      }
     },
   },
   extraReducers(builder) {
@@ -96,4 +106,4 @@ export const appData = createSlice({
   },
 });
 
-export const { clearOffer } = appData.actions;
+export const { clearOffer, clearFavorites } = appData.actions;
